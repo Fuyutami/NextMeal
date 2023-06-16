@@ -1,25 +1,34 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react'
+import { CSSTransition } from 'react-transition-group'
+
+import './App.css'
+import Registration from './components/registration/Registration'
+import Main from './components/main/Main'
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+	const [showRegPage, setShowRegPage] = useState(true)
+	const [showMainPage, setShowMainPage] = useState(false)
+
+	const logIn = () => {
+		setShowRegPage(false)
+	}
+
+	return (
+		<>
+			<CSSTransition
+				in={showRegPage}
+				timeout={400}
+				unmountOnExit
+				onExited={() => setShowMainPage(true)}
+			>
+				<Registration out={!showRegPage} logIn={logIn} />
+			</CSSTransition>
+
+			<CSSTransition in={showMainPage} timeout={500} unmountOnExit>
+				<Main />
+			</CSSTransition>
+		</>
+	)
 }
 
-export default App;
+export default App
