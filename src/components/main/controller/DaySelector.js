@@ -58,8 +58,6 @@ const DaySelector = (props) => {
 		setSelectDay(!selectDay)
 	}
 
-	// useEffect(() => {}, [props.dayData])
-
 	return (
 		<>
 			<Container onMouseEnter={toggleSelectDay} onMouseLeave={toggleSelectDay}>

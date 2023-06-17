@@ -177,43 +177,6 @@ const Composer = (props) => {
 
 	const handleDragStart = (event, product) => {
 		event.dataTransfer.setData('product', product)
-
-		const dragImage = document.createElement('img')
-		dragImage.src =
-			'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'
-
-		const customDragImage = document.createElement('div')
-		customDragImage.className = 'custom-drag-image'
-		customDragImage.innerText = product
-		customDragImage.style.position = 'fixed'
-		customDragImage.style.pointerEvents = 'none'
-		customDragImage.style.top = `${event.clientY}px`
-		customDragImage.style.left = `${event.clientX}px`
-		customDragImage.style.borderRadius = '20px'
-		customDragImage.style.height = '30px'
-		customDragImage.style.backgroundColor = Theme.colorText2
-		customDragImage.style.padding = '1rem'
-		customDragImage.style.color = Theme.colorReflection
-
-		document.body.appendChild(customDragImage)
-
-		const moveCustomDragImage = (moveEvent) => {
-			customDragImage.style.top = `${
-				moveEvent.clientY - customDragImage.offsetHeight / 2
-			}px`
-			customDragImage.style.left = `${
-				moveEvent.clientX - customDragImage.offsetWidth / 2
-			}px`
-		}
-
-		const removeCustomDragImage = () => {
-			document.body.removeChild(customDragImage)
-			document.removeEventListener('dragover', moveCustomDragImage)
-			document.removeEventListener('dragend', removeCustomDragImage)
-		}
-
-		document.addEventListener('dragover', moveCustomDragImage)
-		document.addEventListener('dragend', removeCustomDragImage)
 	}
 
 	const handleDrop = (event) => {
