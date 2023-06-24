@@ -19,6 +19,8 @@ const Container = styled.div`
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	position: relative;
+	z-index: 90;
 
 	box-shadow: 5px 5px 10px #e3e3e3, -5px -5px 10px #ffffff;
 

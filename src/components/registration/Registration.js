@@ -57,42 +57,25 @@ const Switch = styled.label`
 	position: relative;
 	display: flex;
 	justify-content: space-between;
+`
+const Button = styled.button`
+	font-size: 1.6rem;
+	font-family: 'League Spartan', sans-serif;
+	font-weight: 500;
+	user-select: none;
+	border: none;
+	background: none;
 	cursor: pointer;
-
-	input {
-		opacity: 0;
-		width: 0;
-		height: 0;
-	}
-	.LogIn,
-	.SignIn,
-	.separator {
-		font-size: 1.6rem;
-		user-select: none;
-	}
-
-	input:checked ~ .SignIn {
-		color: ${Theme.colorText1};
-	}
-	input:checked ~ .LogIn {
-		color: ${Theme.colorText2};
-	}
-	input:not(:checked) ~ .SignIn {
-		color: ${Theme.colorText2};
-	}
-	input:not(:checked) ~ .LogIn {
-		color: ${Theme.colorText1};
-	}
+	color: ${(props) =>
+		props.className === props.state ? Theme.colorText1 : Theme.colorText3};
 `
 
 const Registration = (props) => {
-	const [state, setState] = useState('Log In')
+	const [state, setState] = useState('LogIn')
 
-	const handleStateChange = () => {
-		if (state === 'Log In') {
-			setState('Sign In')
-		} else {
-			setState('Log In')
+	const handleStateChange = (newState) => {
+		if (newState !== state) {
+			setState(newState)
 		}
 	}
 
@@ -108,10 +91,25 @@ const Registration = (props) => {
 				<Logo fill="#AEAEAE" width="200" height="50" />
 				<LogInWrapper>
 					<Switch>
-						<input type="checkbox" onChange={handleStateChange} />
-						<span className="LogIn">Log In</span>
+						<Button
+							className="LogIn"
+							state={state}
+							onClick={() => {
+								handleStateChange('LogIn')
+							}}
+						>
+							Log In
+						</Button>
 						<span className="separator">&nbsp;/&nbsp;</span>
-						<span className="SignIn">Sign In</span>
+						<Button
+							className="SignIn"
+							state={state}
+							onClick={() => {
+								handleStateChange('SignIn')
+							}}
+						>
+							Sign In
+						</Button>
 					</Switch>
 					<SocialBtn id="google" onClick={handleRegistration}>
 						<IconGoogle fill={Theme.colorGoogle} width="20" height="20" />

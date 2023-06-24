@@ -1,9 +1,10 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import styled from 'styled-components'
 
 import Theme from '../../other/theme'
 import { fadeIn } from '../../other/animations'
 import { IconClose, IconOven, IconSearch } from '../../other/vectors'
+import Draggable from './Draggable'
 
 const Container = styled.div`
 	max-width: 500px;
@@ -17,6 +18,7 @@ const Container = styled.div`
 	animation: ${fadeIn} 3s ease-in-out forwards;
 	padding: 2rem;
 	overflow: hidden;
+	z-index: 100;
 `
 
 const Wrapper = styled.div`
@@ -119,48 +121,7 @@ const ResultText = styled.p`
 `
 
 const Composer = (props) => {
-	const products = [
-		'Chicken',
-		'Beef',
-		'Fish',
-		'Rice',
-		'Beans',
-		'Cheese',
-		'Eggs',
-		'Bread',
-		'Spinach',
-		'Tomatoes',
-		'Onions',
-		'Garlic',
-		'Mushrooms',
-		'Peppers',
-		'Cucumbers',
-		'Apples',
-		'Bananas',
-		'Strawberries',
-		'Blueberries',
-		'Raspberries',
-		'Almonds',
-		'Walnuts',
-		'Oats',
-		'Milk',
-		'Butter',
-		'Olive Oil',
-		'Sugar',
-		'Flour',
-		'Salt',
-		'Pepper',
-		'Basil',
-		'Oregano',
-		'Thyme',
-		'Rosemary',
-		'Mint',
-		'Ginger',
-		'Cinnamon',
-		'Nutmeg',
-		'Vanilla',
-		'Honey',
-	]
+	const products = ['Chicken', 'Beef', 'Fish', 'Rice', 'Beans']
 	const mostPopular = [
 		'Chicken Curry',
 		'Beef Stew',
@@ -171,19 +132,40 @@ const Composer = (props) => {
 	const [searchValue, setSearchValue] = useState('')
 	const [mealIngredients, setMealIngredients] = useState([])
 
+	const [draggingItem, setDraggingItem] = useState(null)
+	const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
+
+	const composerWrapperRef = useRef()
+
 	const handleSearchChange = (event) => {
 		setSearchValue(event.target.value)
 	}
 
-	const handleDragStart = (event, product) => {
-		event.dataTransfer.setData('product', product)
+	const handleMouseMove = (event) => {
+		setMousePosition({ x: event.clientX, y: event.clientY })
 	}
 
-	const handleDrop = (event) => {
-		const product = event.dataTransfer.getData('product')
+	const handleDragStart = (event, product) => {
+		event.preventDefault()
+		console.log('drag')
+		setMousePosition({ x: event.clientX, y: event.clientY })
+		setDraggingItem(product)
+		window.addEventListener('mousemove', handleMouseMove)
+		window.addEventListener('mouseup', handleDragEnd)
+	}
 
-		if (!mealIngredients.includes(product)) {
-			setMealIngredients([...mealIngredients, product])
+	const handleDragEnd = (event) => {
+		setDraggingItem(null)
+		window.removeEventListener('mousemove', handleMouseMove)
+		window.removeEventListener('mouseup', handleDragEnd)
+
+		if (
+			composerWrapperRef.current &&
+			composerWrapperRef.current.contains(event.target)
+		) {
+			if (!mealIngredients.includes(draggingItem)) {
+				setMealIngredients([...mealIngredients, draggingItem])
+			}
 		}
 	}
 
@@ -195,6 +177,14 @@ const Composer = (props) => {
 
 	return (
 		<Container>
+			{draggingItem && (
+				<Draggable
+					x={mousePosition.x}
+					y={mousePosition.y}
+					name={draggingItem}
+					onMouseUp={handleDragEnd}
+				/>
+			)}
 			<Wrapper>
 				<Header>
 					<SearchBarWrapper>
@@ -221,7 +211,7 @@ const Composer = (props) => {
 					))}
 				</ResultsWrapper>
 				<ComposerWrapper
-					onDrop={handleDrop}
+					ref={composerWrapperRef}
 					onDragOver={(event) => event.preventDefault()}
 				>
 					{mealIngredients.length > 0 ? (

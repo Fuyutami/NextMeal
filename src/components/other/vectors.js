@@ -225,6 +225,42 @@ export const IconOven = (props) => {
 	)
 }
 
+export const IconArrowUp = (props) => {
+	return (
+		<svg
+			{...props}
+			width={props.width || 19}
+			height={props.height || 9}
+			viewBox="0 0 19 9"
+			fill="none"
+			xmlns="http://www.w3.org/2000/svg"
+		>
+			<path
+				d="M9.60706 0.559082L18.6071 8.55908H0.607056L9.60706 0.559082Z"
+				fill={props.fill || '#757575'}
+			/>
+		</svg>
+	)
+}
+
+export const IconArrowDown = (props) => {
+	return (
+		<svg
+			{...props}
+			width={props.width || 19}
+			height={props.height || 9}
+			viewBox="0 0 19 9"
+			fill="none"
+			xmlns="http://www.w3.org/2000/svg"
+		>
+			<path
+				d="M9.60706 8.24341L0.607057 0.243406L18.6071 0.243408L9.60706 8.24341Z"
+				fill={props.fill || '#757575'}
+			/>
+		</svg>
+	)
+}
+
 export const MealIcon = (props) => {
 	const category = props.category
 
