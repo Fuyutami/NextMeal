@@ -121,7 +121,16 @@ const ResultText = styled.p`
 `
 
 const Composer = (props) => {
-	const products = ['Chicken', 'Beef', 'Fish', 'Rice', 'Beans']
+	const products = [
+		'Chicken',
+		'Beef',
+		'Fish',
+		'Rice',
+		'Beans',
+		'sugar',
+		'salt',
+		'pepper',
+	]
 	const mostPopular = [
 		'Chicken Curry',
 		'Beef Stew',

@@ -229,9 +229,9 @@ export const IconArrowUp = (props) => {
 	return (
 		<svg
 			{...props}
-			width={props.width || 19}
-			height={props.height || 9}
-			viewBox="0 0 19 9"
+			width={props.width || 18}
+			height={props.height || 8}
+			viewBox="0 0 18 8"
 			fill="none"
 			xmlns="http://www.w3.org/2000/svg"
 		>
@@ -247,9 +247,9 @@ export const IconArrowDown = (props) => {
 	return (
 		<svg
 			{...props}
-			width={props.width || 19}
-			height={props.height || 9}
-			viewBox="0 0 19 9"
+			width={props.width || 18}
+			height={props.height || 8}
+			viewBox="0 0 18 8"
 			fill="none"
 			xmlns="http://www.w3.org/2000/svg"
 		>
