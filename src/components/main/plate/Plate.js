@@ -3,7 +3,7 @@ import styled, { keyframes } from 'styled-components'
 
 import Theme from '../../other/theme'
 import { fadeIn } from '../../other/animations'
-import Controls from './Controls'
+import AddNewBtn from './AddNewBtn'
 import Meal from './Meal'
 
 const Container = styled.div`
@@ -18,14 +18,24 @@ const Container = styled.div`
 	animation: ${fadeIn} 3s ease-in-out forwards;
 	padding: 0;
 	overflow: hidden;
+	position: relative;
 `
-
-const PlateWrapper = styled.div`
+// unordered list
+const MealsWrapper = styled.ul`
 	width: 100%;
 	height: 100%;
-	display: grid;
-	grid-template-rows: 45% 55%;
-	grid-template-columns: repeat(7, 1fr);
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding: 0;
+	overflow-y: scroll;
+	overflow-x: hidden;
+	list-style: none;
+
+	::-webkit-scrollbar {
+		width: 0px;
+		background: transparent;
+	}
 `
 
 const Plate = (props) => {
@@ -46,28 +56,23 @@ const Plate = (props) => {
 	return (
 		<>
 			<Container>
-				<PlateWrapper>
-					<Controls
-						activeMeal={activeMeal}
-						activateComposer={props.activateComposer}
-					/>
+				<AddNewBtn
+					activeMeal={activeMeal}
+					activateComposer={props.activateComposer}
+				/>
+				<MealsWrapper>
 					{props.dayData.meals.map((meal, index) => {
 						return (
 							<Meal
 								key={index}
 								id={index}
-								active={activeMeal === index}
 								mealData={meal}
 								index={index}
 								dayData={props.dayData}
-								setActiveMeal={(index) => {
-									activateMeal(index)
-								}}
-								deactivateMeal={deactivateMeal}
 							/>
 						)
 					})}
-				</PlateWrapper>
+				</MealsWrapper>
 			</Container>
 		</>
 	)
